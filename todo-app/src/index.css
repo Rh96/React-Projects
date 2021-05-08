@@ -1,0 +1,22 @@
+body {
+    text-align: center;
+}
+
+.todo-item-box{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    align-items: center;
+    padding: 38px;
+    border: 1px solid black;
+}
+
+.todo-item {
+    line-height: 1.6;
+    font-size: 22px;
+}
+
+input[type=checkbox]{
+    margin-right: 10px;
+}
