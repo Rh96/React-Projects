@@ -16,15 +16,15 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     }
 
-  async componentDidMount(){
-      try{
-        const response =  await fetch('https://raw.githubusercontent.com/Rh96/React-Projects/main/Jsons/todoList.json');
-        const data = await response.json();
-        this.setState({ todos : data });
-      } catch (error) {
-          console.log(error);
-      }
-    }
+    async componentDidMount(){
+        try {
+            const response =  await fetch('https://raw.githubusercontent.com/Rh96/React-Projects/main/Jsons/todoList.json');
+            const data = await response.json();
+            this.setState({ todos : data });
+            } catch (error) {
+                console.log(error);
+            }
+        }
 
     handleChange (id){
         this.setState(prevState => {
