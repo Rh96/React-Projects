@@ -65,9 +65,14 @@ class TodoContainer extends Component {
             body: JSON.stringify({title: this.state.title, completed: false})
         };
 
+        let rnd = Math.floor(Math.random() * 100000);
+
+        this.state.todos.push({id: rnd, title: this.state.title, completed: false});
+        this.forceUpdate();
+
         fetch(`${this.state.url}/todos`, optionsRequest)
             .then(res => res.json())
-            .then(data => data)
+            .then(data => data);
     }
 
     deleteItem = (id) => {
