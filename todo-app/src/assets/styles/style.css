@@ -1,16 +1,34 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Dancing Script';
+    src: local('Dancing Script'), url('/src/assets/fonts/static/DancingScript-Medium.ttf') format('truetype');
+}
+
 body {
     font-family: cursive;
+    background-image: url('/src/assets/images/main-image-1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-fluid {
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 /* HEADER */
 header {
-    position: absolute;
-    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 15vh;
+    height: 12vh;
     color: white;
     font-size: 46px;
 }
@@ -18,17 +36,87 @@ header {
 .header-img {
     background-image: url('/src/assets/images/header-background.jpg');
     background-size: cover;
+    opacity: 0.75;
+}
+
+/* TODO LIST */
+.todo-container {
+    background-color: #f5f5f5;
+    border: 1px solid red;
+    width: 550px;
+    height: 700px;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 0;
+}
+
+.todo-container-no-todos {
+    background-color: #f5f5f5;
+    border: 1px solid red;
+    width: 550px;
+    height: 700px;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.todo-item {
+    width: 548px;
+    height: 56px;
+    font-family: Dancing Script;
+    font-size: 32px;
+    padding: 0;
+}
+
+.todo-container .row {
+    margin-left: 1rem;
+    margin-top: 2rem;
+    width: 95%;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.todo-container .row input {
+    width: 100%;
+}
+
+.todo-container .row button {
+    width: 100%;
+}
+
+.click-here {
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    border-radius: .5em;
+    font-size: 20px;
+}
+
+.todo-item li {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    border-bottom: 1px solid rgb(35, 127, 231);
+    text-indent: 15px;
+    height: auto;
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.todo-item-completed {
+    text-decoration: rgb(9, 30, 223) line-through;
 }
 
 /* FOOTER */
 footer {
-    position: absolute;
-    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 15vh;
+    height: 12vh;
     font-size: 32px;
     color: white;
 }
