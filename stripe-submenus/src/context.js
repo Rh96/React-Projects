@@ -3,36 +3,41 @@ import sublinks from './data'
 
 const AppContext = React.createContext();
 
-export const AppProvider = ({ children }) => {
-    const [isSidebarOpen, setIsSideBarOpen] = useState(true);
-    const [isSubmenuOpen, setIsSubmenuOpen] = useState(true);
-
-    const openSideBar = () => {
-        setIsSideBarOpen(true)
-    }
-    const closeSideBar = () => {
-        setIsSideBarOpen(false)
-    }
-
+const AppProvider = ({ children }) => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+    
+    const openSidebar = () => {
+      setIsSidebarOpen(true);
+    };
+    const closeSidebar = () => {
+      setIsSidebarOpen(false);
+    };
     const openSubmenu = () => {
-        setIsSubmenuOpen(true)
-    }
+      setIsSubmenuOpen(true);
+    };
     const closeSubmenu = () => {
-        setIsSubmenuOpen(false)
-    }
+      setIsSubmenuOpen(false);
+    };
+  
+    return (
+      <AppContext.Provider
+        value={{
+          isSidebarOpen,
+          openSidebar,
+          closeSidebar,
+          isSubmenuOpen,
+          openSubmenu,
+          closeSubmenu,
+        }}
+      >
+        {children}
+      </AppContext.Provider>
+    );
+  };
 
-    return <AppContext.Provider 
-    value={{
-        isSidebarOpen, 
-        isSubmenuOpen,
-        openSideBar,
-        openSubmenu, 
-        closeSubmenu, 
-        closeSideBar
-    }}>
-    {children}</AppContext.Provider>
-}
-
-export const useGlobalContext = () => {
-    return useContext(AppContext)
-}
+  export const useGlobalContext = () => {
+    return useContext(AppContext);
+  };
+  
+  export { AppContext, AppProvider };
