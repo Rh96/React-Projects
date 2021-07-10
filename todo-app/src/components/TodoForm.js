@@ -9,7 +9,7 @@ const TodoForm = ({ onAdd }) => {
         e.preventDefault()
 
         if(!title) {
-            alert('Please add a todo item!')
+            alert('Please add a todo!')
             return
         }
 
@@ -34,13 +34,15 @@ const TodoForm = ({ onAdd }) => {
                     />
                 </div>
                 <div className="col-3">
-                    <button type='submit' onClick={onSubmit} className="btn btn-primary">Add</button>
+                    <button type='submit' onClick={(e) => { setShowAddTodo(!showAddTodo); onSubmit(e) }} className="btn btn-primary">
+                        Add
+                    </button>
                 </div>
             </div>}
         <div className="row">
             <div className="col-12">
                 <div className="click-here bg-primary" onClick={() => setShowAddTodo(!showAddTodo)}>
-                    {showAddTodo ? 'Close' : 'Click Here to Add Task'}
+                    {showAddTodo ? 'Close' : 'Click Here to Add Todo'}
                 </div>
             </div>
         </div>

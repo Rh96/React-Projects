@@ -1,5 +1,5 @@
 // React and Bootstrap Libraries
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/styles/style.css'
 
@@ -8,58 +8,94 @@ import Header from './components/Header'
 import TodoContainer from './components/TodoContainer';
 import Footer from './components/Footer'
 
-// TODO: Call JSON Server and create fake db.json
-// TODO: Use routers to show/hide multiple pages
-
 function App() {
-  const [todoItems, setTodoItems] = useState([
-    {
-      "id": 1,
-      "title": "delectus aut autem",
-      "completed": true
-    },
-    {
-      "id": 2,
-      "title": "quis ut nam facilis et officia qui",
-      "completed": true
-    },
-    {
-      "id": 3,
-      "title": "fugiat veniam minus",
-      "completed": false
-    },
-  ])
+  const url = 'http://localhost:3000/todos';
+  const [todos, setTodos] = useState([])
+    useEffect(() => {
+      const getTodos = async () => {
+        const todosFromServer = await fetchTodos()
+        setTodos(todosFromServer) 
+      }
 
-  // Add Todo Item
-  const todoItemAdd = (todoItem) => {
-      const id = Math.floor(Math.random() * 10000) + 1;
-      const newTodoItem = { id, ...todoItem }
-      setTodoItems([ ...todoItems, newTodoItem ])
+      getTodos()
+    }, [])
+
+  // Fetch Todos 
+  const fetchTodos = async () => {
+    const res = await fetch(url)
+    const data = await res.json()
+
+    return data
+  }
+
+  // Fetch Todo 
+  const fetchTodo = async (id) => {
+    const res = await fetch(`${url}/${id}`)
+    const data = await res.json()
+
+    return data
+  }
+
+  // Add Todo
+  const todoAdd = async (todo) => {
+    const id = Math.floor(Math.random() * 10000) + 1;
+    const newTodo = { id, ...todo }
+
+    setTodos([...todos, newTodo])
+    
+    const res = await fetch(url, {
+      method:'POST',
+      headers: {
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(newTodo)
+    })
+
+    const data = await res.json()
+    console.log(data)
   }
   
-  // Delete Todo Item
-  const deleteTodoItem = (id) => {
-    setTodoItems(todoItems.filter((todoItem) => todoItem.id !== id))
+  // Delete Todo
+  const deleteTodo = async (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id))
+
+    await fetch(`${url}/${id}`, 
+    {
+        method: 'DELETE'
+    })
   }
 
   // Toggle Completed
-  const toggleCompletedTodoItem = (id) => {
-      setTodoItems(todoItems.map((todoItem) => todoItem.id === id ? 
-      { 
-        id: todoItem.id, 
-        title: todoItem.title, 
-        completed: !todoItem.completed 
-      } : todoItem))
+  const toggleCompletedTodo = async (id) => {
+    const todoToggle = await fetchTodo(id)
+    const updTodo = {...todoToggle, isCompleted: !todoToggle.isCompleted}
+
+    const res = await fetch(`${url}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(updTodo)
+    })
+
+    const data = await res.json()
+
+    setTodos(
+      todos.map((todo) => 
+        todo.id === id ? { ...todo, isCompleted:
+        data.isCompleted } : todo
+      )
+    )
   }
 
   return (
     <div className="container-fluid">
       <Header />
         <TodoContainer 
-          todoItems={todoItems}
-          onAdd={todoItemAdd}
-          onToggle={toggleCompletedTodoItem}
-          onDelete={deleteTodoItem}
+          todos={todos}
+          onAdd={todoAdd}
+          onToggle={toggleCompletedTodo}
+          onDelete={deleteTodo}
         />
       <Footer />
     </div>

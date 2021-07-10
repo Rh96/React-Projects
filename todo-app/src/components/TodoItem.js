@@ -1,15 +1,15 @@
 import { FaTimes } from 'react-icons/fa'
 
-const TodoItem = ({ item, onDelete, onToggle }) => {
+const TodoItem = ({ todo, onDelete, onToggle }) => {
     return (
-        <ul className={`todo-item ${item.completed ? 'todo-item-completed' : ''}`}>
+        <ul className={`todo-item ${todo.isCompleted ? 'todo-item-completed' : ''}`}>
             <li>
-                <div onClick={() => onToggle(item.id)} style={{ cursor: 'pointer' }}>
-                    {item.title}
+                <div onClick={() => onToggle(todo.id)} style={{ cursor: 'pointer' }}>
+                    {todo.title}
                 </div>
                 <FaTimes 
                     style={{ color: 'red', cursor: 'pointer' }} 
-                    onClick={() => onDelete(item.id)}
+                    onClick={() => onDelete(todo.id)}
                 />
             </li>
         </ul>

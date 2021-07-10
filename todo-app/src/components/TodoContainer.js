@@ -1,19 +1,27 @@
 import TodoForm from "./TodoForm"
 import TodoItem from "./TodoItem"
 
-const TodoContainer = ({ todoItems, onAdd ,onDelete, onToggle }) => {
+const TodoContainer = ({ todos, onAdd ,onDelete, onToggle }) => {
     return (
         <div className='todo-container'>
             <div>
-                {todoItems.map((item) => (
+                {todos.map((todo) => (
                     <TodoItem 
-                        key={item.id} 
-                        item={item}
+                        key={todo.id} 
+                        todo={todo}
                         onDelete={onDelete}
                         onToggle={onToggle}
                     />
                 ))}
-                <TodoForm onAdd={onAdd}/>
+                {
+                todos.length === 7 ? 
+                    <div style={{display: 'none'}}>
+                        <TodoForm onAdd={onAdd} />
+                    </div> : 
+                    <div> 
+                        <TodoForm onAdd={onAdd} /> 
+                    </div>
+                }
             </div>
         </div>
     )
